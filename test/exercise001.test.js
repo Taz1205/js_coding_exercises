@@ -21,6 +21,9 @@ describe("capitalize", () => {
   test("does nothing if the string is already capitalized", () => {
     expect(capitalize("Hello")).toBe("Hello");
   });
+  test("Prints 'A word is required' if nothing is inputted", () => {
+    expect(capitalize("")).toBe("");
+  });
 });
 
 describe("generateInitials", () => {

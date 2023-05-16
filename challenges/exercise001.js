@@ -5,9 +5,12 @@
 // Note: Be sure to read the corresponding .md file for each exercise, in the docs folder. 📘 👍
 
 export function capitalize(word) {
-	if (word === undefined) throw new Error('word is required');
-	// Add your code here!
-}
+	if (word === undefined) throw new Error('A word is required');
+	else if (typeof word !== 'string' || word.length === 0) {
+		console.log("A word is required");
+	}
+	return word.charAt(0).toUpperCase() + word.slice(1);
+	}
 
 export function generateInitials(firstName, lastName) {
 	if (firstName === undefined) throw new Error('firstName is required');
