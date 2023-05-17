@@ -22,6 +22,11 @@ describe('getFillings', () => {
 		};
 		expect(getFillings(sandwich2)).toEqual(['smoked salmon', 'dill']);
 	});
+	test('Prints error message if no sandwich fillings are inputted', () => {
+		const sandwich = {};
+		expect(getFillings(sandwich)).toEqual("fillings are required");
+		console.log(getFillings(sandwich));
+});
 });
 
 describe('isFromManchester', () => {
@@ -40,6 +45,10 @@ describe('isFromManchester', () => {
 			city: 'Leeds',
 			age: 39,
 		};
+		expect(isFromManchester(person)).toBe(false);
+	});
+	test('returns false if no information is inputted', () => {
+		const person = {};
 		expect(isFromManchester(person)).toBe(false);
 	});
 });
@@ -74,6 +83,11 @@ describe('getBusNumbers', () => {
 });
 
 describe('countSheep', () => {
+	test('returns 0 if the input is invalid', () => {
+		const arr = [];
+		expect(countSheep(arr)).toBe(0);
+	});
+
 	test('returns 0 if there are 0 sheep in the array', () => {
 		const arr = ['dog', 'badger', 'dog', 'dog', 'chicken'];
 		expect(countSheep(arr)).toBe(0);
@@ -142,6 +156,21 @@ describe('hasMPostCode', () => {
 				postCode: 'ME20 5BR',
 			},
 		};
+		expect(hasMPostCode(person)).toBe(false);
+	});
+	test('returns false if invalid input', () => {
+		const person = {};
+		expect(hasMPostCode(person)).toBe(false);
+	});
+	test('returns false for invalid postcode', () => {
+		const person = {name: 'Johnny',
+		age: 45,
+		address: {
+			line1: '107 Clyde Street',
+			city: 'Croydon',
+			postCode: '',
+		},
+	};
 		expect(hasMPostCode(person)).toBe(false);
 	});
 });
