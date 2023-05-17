@@ -81,7 +81,8 @@ describe("getMiddleCharacter", () => {
 
   test("returns the middle 2 characters from a string of even length", () => {
     expect(getMiddleCharacter("help!!")).toBe("lp");
-  });getMiddleCharacter
+  });
+  getMiddleCharacter;
 });
 
 describe("reverseWord", () => {
@@ -111,7 +112,7 @@ describe("reverseAllWords", () => {
   });
   test("Prints error message if there are no words inputted", () => {
     expect(reverseAllWords("")).toBe("words are required");
-});
+  });
 });
 
 describe("countLinuxUsers", () => {
@@ -154,7 +155,7 @@ describe("getMeanScore", () => {
   });
   test("Prints error message", () => {
     expect(getMeanScore("")).toBe("scores are required");
-});
+  });
 });
 
 describe("simpleFizzBuzz", () => {

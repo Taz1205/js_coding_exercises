@@ -6,7 +6,31 @@ import {
   duplicateNumbers,
 } from "../challenges/exercise003";
 
+describe("getSquares", () => {
+  test("returns an empty array if invalid input", () => {
+    expect(getSquares("hello")).toEqual([]);
+  });
+  test("returns an empty array if empty array passed", () => {
+    expect(getSquares([])).toEqual([]);
+  });
+  test("returns an array of squares of the original numbers", () => {
+    expect(getSquares([2, 4, 6])).toEqual([4, 16, 36]);
+    expect(getSquares([2, 4, 6, 1])).toEqual([4, 16, 36, 1]);
+    expect(getSquares([2, 3, 6, 7, 12, 4])).toEqual([4, 9, 36, 49, 144, 16]);
+    expect(getSquares([54, 24, 5, 66, 992])).toEqual([
+      2916, 576, 25, 4356, 984064,
+    ]);
+  });
+});
+
+
 describe("camelCaseWords", () => {
+  test("Print error message if no input", () => {
+    expect(camelCaseWords([])).toBe("words are required");
+  });
+  test("Print error message if invalid input", () => {
+    expect(camelCaseWords(0)).toBe("words are required");
+  });
   test("camel cases a single word (i.e. no capital letter at beginning)", () => {
     expect(camelCaseWords(["my"])).toBe("my");
   });
@@ -25,22 +49,11 @@ describe("camelCaseWords", () => {
   });
 });
 
-describe("getSquares", () => {
-  test("returns an empty array if empty array passed", () => {
-    expect(getSquares([])).toEqual([]);
-  });
-
-  test("returns an array of squares of the original numbers", () => {
-    expect(getSquares([2, 4, 6])).toEqual([4, 16, 36]);
-    expect(getSquares([2, 4, 6, 1])).toEqual([4, 16, 36, 1]);
-    expect(getSquares([2, 3, 6, 7, 12, 4])).toEqual([4, 9, 36, 49, 144, 16]);
-    expect(getSquares([54, 24, 5, 66, 992])).toEqual([
-      2916, 576, 25, 4356, 984064,
-    ]);
-  });
-});
-
 describe("getTotalSubjects", () => {
+  test("returns 0 if array is empty or invalid input", () => {
+    const people = [];
+    expect(getTotalSubjects(people)).toBe(0);
+  });
   test("returns 0 if no people have subjects", () => {
     const people = [
       { name: "Billy", subjects: [] },
@@ -73,6 +86,14 @@ describe("getTotalSubjects", () => {
 });
 
 describe("checkIngredients", () => {
+  test("returns false if empty menu or empty ingredients ", () => {
+    const menu = [] 
+    expect(checkIngredients(menu, "")).toBe(false);
+  });
+  test("returns false if invalid menu or ingredients ", () => {
+    const menu = [1,2,3] 
+    expect(checkIngredients(menu, 45)).toBe(false);
+  });
   test("returns false if no menu items include the specified ingredient", () => {
     const menu = [
       {
@@ -101,7 +122,6 @@ describe("checkIngredients", () => {
 
     expect(checkIngredients(menu, "milk")).toBe(false);
   });
-
   test("returns true if a menu item includes the specified ingredient", () => {
     const menu = [
       {
@@ -133,6 +153,15 @@ describe("checkIngredients", () => {
 });
 
 describe("duplicateNumbers", () => {
+  test("returns an empty array if invalid input", () => {
+    let arr1 = [];
+    let arr2 = [];
+    expect(duplicateNumbers(arr1, arr2)).toEqual([]);
+
+    arr1 = [6, 4, 2, 4, 1, 9];
+    arr2 = [1];
+    expect(duplicateNumbers(arr1, arr2)).toEqual([1]);
+  });
   test("returns an array of numbers which appear in both arr1 and arr2", () => {
     let arr1 = [1, 55, 4, 3, 7, 8];
     let arr2 = [55, 23, 65, 0];
