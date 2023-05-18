@@ -23,7 +23,7 @@ export const count1sand0s = (str) => {
     else if (str[i] === "0") count0s++;
     else return null;
   }
-  return { count1s, count0s };
+  return { 0: count0s, 1: count1s } ;
 };
 
 export const reverseNumber = (n) => {

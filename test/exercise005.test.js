@@ -43,23 +43,23 @@ describe("count1sand0s", () => {
   });
   test("returns an object with the count of 1s and 0s in a string", () => {
     expect(count1sand0s("11000")).toEqual({
-      count1s: 2,
-      count0s: 3,
+      1 : 2,
+      0 : 3,
     });
 
     expect(count1sand0s("0101010111")).toEqual({
-      count1s: 6,
-      count0s: 4,
+      1 : 6,
+      0 : 4,
     });
 
     expect(count1sand0s("1111111")).toEqual({
-      count1s: 7,
-      count0s: 0,
+      1 : 7,
+      0 : 0,
     });
 
     expect(count1sand0s("0111")).toEqual({
-      count1s: 3,
-      count0s: 1,
+      1 : 3,
+      0 : 1,
     });
   });
 });
