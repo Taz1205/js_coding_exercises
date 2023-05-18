@@ -23,7 +23,6 @@ describe("getSquares", () => {
   });
 });
 
-
 describe("camelCaseWords", () => {
   test("Print error message if no input", () => {
     expect(camelCaseWords([])).toBe("words are required");
@@ -87,11 +86,11 @@ describe("getTotalSubjects", () => {
 
 describe("checkIngredients", () => {
   test("returns false if empty menu or empty ingredients ", () => {
-    const menu = [] 
+    const menu = [];
     expect(checkIngredients(menu, "")).toBe(false);
   });
   test("returns false if invalid menu or ingredients ", () => {
-    const menu = [1,2,3] 
+    const menu = [1, 2, 3];
     expect(checkIngredients(menu, 45)).toBe(false);
   });
   test("returns false if no menu items include the specified ingredient", () => {

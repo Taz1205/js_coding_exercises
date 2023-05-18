@@ -13,8 +13,11 @@ describe("findSmallNums", () => {
   test("returns an array of numbers smaller than 1", () => {
     expect(findSmallNums([8, 1, 1.3, 0.9, 0.4, -1])).toEqual([0.9, 0.4, -1]);
     expect(findSmallNums([-7, -243])).toEqual([-7, -243]);
+  });
+  test("returns an empty array if empty or invalid input or all numbers greater than 1", () => {
     expect(findSmallNums([100, 88])).toEqual([]);
     expect(findSmallNums([])).toEqual([]);
+    expect(findSmallNums("a")).toEqual([]);
   });
 });
 
@@ -29,9 +32,28 @@ describe("findNamesBeginningWith", () => {
     expect(findNamesBeginningWith(names, "D")).toEqual(["Dave"]);
     expect(findNamesBeginningWith(names, "F")).toEqual([]);
   });
+  test("returns an empty array if empty", () => {
+    const names = [];
+    expect(findNamesBeginningWith(names, "F")).toEqual([]);
+    expect(findNamesBeginningWith(names, "")).toEqual([]);
+  });
+  test("returns an empty array if invalid input", () => {
+    const names = ["1", "2", "3", "4"];
+    expect(findNamesBeginningWith(names, "F")).toEqual([]);
+    expect(findNamesBeginningWith(names, "")).toEqual([]);
+    expect(findNamesBeginningWith(names, "7")).toEqual([]);
+  });
 });
 
 describe("findVerbs", () => {
+  test("returns an empty array if no input", () => {
+    const words = [];
+    expect(findVerbs(words)).toEqual([]);
+  });
+  test("returns an empty array if invalid input", () => {
+    const words = [1, 2, 3];
+    expect(findVerbs(words)).toEqual([]);
+  });
   test("returns an array of words that are considered verbs (because they begin with 'to ')", () => {
     const words = [
       "to eat",
@@ -68,6 +90,14 @@ describe("getIntegers", () => {
 });
 
 describe("getCities", () => {
+  test("returns an empty array if no data provided", () => {
+    const users = [];
+    expect(getCities(users)).toEqual([]);
+  });
+  test("returns an empty array invalid input", () => {
+    const users = "city: London";
+    expect(getCities(users)).toEqual([]);
+  });
   test("returns an array of the cities of each user", () => {
     const users = [
       {
@@ -116,6 +146,14 @@ describe("getSquareRoots", () => {
     const nums = [36, 77, 12, 355, 92, 5];
     expect(getSquareRoots(nums)).toEqual([6, 8.77, 3.46, 18.84, 9.59, 2.24]);
   });
+  test("returns empty array if no input", () => {
+    const nums = [];
+    expect(getSquareRoots(nums)).toEqual([]);
+  });
+  test("returns empty array if invalid input ", () => {
+    const nums = "a";
+    expect(getSquareRoots(nums)).toEqual([]);
+  });
 });
 
 describe("findSentencesContaining", () => {
@@ -152,6 +190,14 @@ describe("findSentencesContaining", () => {
       "It's best to map these additional items such as a test framework, which is not needed for running your project, in a devDependencies object",
     ]);
   });
+  test("Return empty array if no input", () => {
+    const sentencesAboutPackageJson = [];
+    expect(findSentencesContaining(sentencesAboutPackageJson, "")).toEqual([]);
+  });
+  test("Return empty array if invalid input", () => {
+    const sentencesAboutPackageJson = "a";
+    expect(findSentencesContaining(sentencesAboutPackageJson, "1")).toEqual([]);
+  });
 });
 
 describe("getLongestSides", () => {
@@ -173,5 +219,17 @@ describe("getLongestSides", () => {
       [7, 12, 8],
     ];
     expect(getLongestSides(data2)).toEqual([7, 9, 6, 13, 12]);
+  });
+  test("Print error message if data array is empty", () => {
+    const data = [];
+    expect(getLongestSides(data)).toBe("triangles are required");
+  });
+  test("Print error message if data is not an array", () => {
+    const data = "a";
+    expect(getLongestSides(data)).toBe("triangles are required");
+  });
+  test("Print error message if triangle data is empty or invalid input", () => {
+    const data = [[1, 2, 3, 4]];
+    expect(getLongestSides(data)).toEqual(["Invalid triangle data"]);
   });
 });
