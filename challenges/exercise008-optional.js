@@ -2,30 +2,75 @@
 	👉 These exercises are a quick practice of some modern JavaScript features.
 */
 
+const colorConvert = require("color-convert");
+
 export function printColours(colours) {
-	if (!colours) throw new Error('colour is required');
-	// Your solution using the spread operator here!
+  if (
+    !Array.isArray(colours) ||
+    colours.length === 0 ||
+    colours.includes("") ||
+    colours.some((c) => typeof c !== "string")
+  ) {
+    return false;
+  }
+
+  const isValid = colours.every((c) => {
+    const rgb = colorConvert.keyword.rgb(c);
+    return Array.isArray(rgb);
+  });
+
+  if (isValid) {
+    return [...colours];
+  } else {
+    return false;
+  }
 }
 
 export function shoppingList(list, newItem) {
-	if (!list) throw new Error('list is required');
-	if (!newItem) throw new Error('newItem is required');
-	// Your solution using the spread operator here!
+  if (!Array.isArray(list) || list.some((c) => typeof c !== "string")) {
+    return false;
+  }
+  if (Array.isArray(newItem) && newItem.length > 0) {
+    return [...list, ...newItem];
+  } else {
+    return [...list];
+  }
 }
 
 export function highestNumber(numbers) {
-	if (!numbers) throw new Error('numbers are required');
-	// Your solution using the spread operator here!
+  if (
+    !Array.isArray(numbers) ||
+    numbers.length === 0 ||
+    numbers.some((n) => typeof n !== "number")
+  ) {
+    return false;
+  }
+
+  return Math.max(...numbers);
 }
 
 export function splitThatString(string) {
-	if (!string) throw new Error('string is required');
-	// Your solution using the spread operator here!
+  if (typeof string !== "string" || string.length === 0) {
+    return [];
+  }
+
+  return [...string];
 }
 
-// Optional Chaining Bonus activity!
-
 export function addressLookUp(user) {
-	if (!user) throw new Error('user is required');
-	// Your solution using optional chaining here!
+  if (
+    !isObject(user) ||
+    Object.keys(user).length === 0 ||
+	!user.address ||
+    !user.address.postcode )
+  
+  {
+    return undefined;
+  }
+else 
+  return user?.address?.postcode;
+}
+
+function isObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
 }
