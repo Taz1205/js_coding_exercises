@@ -11,7 +11,18 @@
  * @returns {Number}
  */
 export const sumMultiples = (arr) => {
-	if (arr === undefined) throw new Error('arr is required');
+  if (arr === undefined) throw new Error("arr is required");
+  else if (arr.length === 0 || !Array.isArray(arr))
+    throw new Error("A valid input is required");
+  let sum = 0;
+
+  arr.forEach((n) => {
+    if (n % 3 === 0 || n % 5 === 0) {
+      sum += n;
+    }
+  });
+
+  return sum;
 };
 
 /**
@@ -20,7 +31,10 @@ export const sumMultiples = (arr) => {
  * @returns {Boolean}
  */
 export const isValidDNA = (str) => {
-	if (str === undefined) throw new Error('str is required');
+  if (str === undefined) throw new Error("str is required");
+  if (str.length === 0 || typeof str !== "string") return false;
+  const regex = /^[CGTA]+$/i;
+  return regex.test(str);
 };
 
 /**
@@ -29,7 +43,25 @@ export const isValidDNA = (str) => {
  * @returns {String}
  */
 export const getComplementaryDNA = (str) => {
-	if (str === undefined) throw new Error('str is required');
+  if (str === undefined) throw new Error("str is required");
+  if (typeof str !== "string") return false;
+  const complementaryPairs = {
+    A: "T",
+    T: "A",
+    C: "G",
+    G: "C",
+  };
+  const regex = /^[CGTA]+$/i;
+  let complementaryDNA = "";
+  if (regex.test(str)) {
+    for (let i = 0; i < str.length; i++) {
+      //console.log(str[i]);
+      if (str[i] in complementaryPairs)
+        complementaryDNA += complementaryPairs[str[i]];
+    }
+
+    return complementaryDNA;
+  } else return "";
 };
 
 /**
@@ -38,7 +70,30 @@ export const getComplementaryDNA = (str) => {
  * @returns {Boolean}
  */
 export const isItPrime = (n) => {
-	if (n === undefined) throw new Error('n is required');
+  //if (n === undefined) throw new Error("n is required");
+  if (typeof n !== "number" || n === null) return false;
+  if (n <= 1) {
+    return false;
+  }
+
+  if (n <= 3) {
+    return true;
+  }
+
+  if (n % 2 === 0 || n % 3 === 0) {
+    return false;
+  }
+
+  let divisor = 5;
+
+  while (divisor * divisor <= n) {
+    if (n % divisor === 0 || n % (divisor + 2) === 0) {
+      return false;
+    }
+    divisor += 6;
+  }
+
+  return true;
 };
 
 /**
@@ -53,8 +108,14 @@ export const isItPrime = (n) => {
  * @returns {Array}
  */
 export const createMatrix = (n, fill) => {
-	if (n === undefined) throw new Error('n is required');
-	if (fill === undefined) throw new Error('fill is required');
+  if (
+    (typeof fill !== "string") | (fill.length === 0) ||
+    typeof n !== "number" ||
+    Number.isNaN(n)
+  )
+    return false;
+  const matrix = Array.from({ length: n }, () => Array(n).fill(fill));
+  return matrix;
 };
 
 /**
@@ -70,6 +131,16 @@ export const createMatrix = (n, fill) => {
  * @returns {Boolean}
  */
 export const areWeCovered = (staff, day) => {
-	if (staff === undefined) throw new Error('staff is required');
-	if (day === undefined) throw new Error('day is required');
+  if (
+    staff.length === 0 ||
+    day.length === 0 ||
+    !Array.isArray(staff) ||
+    typeof day !== "string"
+  )
+    return false;
+  const staffScheduled = staff.filter((staffMember) =>
+    staffMember.rota.includes(day)
+  );
+
+  return staffScheduled.length >= 3;
 };
