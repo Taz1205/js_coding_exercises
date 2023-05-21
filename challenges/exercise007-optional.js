@@ -7,8 +7,16 @@
  * @param {Number} n
  */
 export const sumDigits = (n) => {
-	if (n === undefined) throw new Error('n is required');
-	else if (n !== 'number' || n.length === 0) return (0);
+  //if (n === undefined) throw new Error("n is required");
+  if (typeof n !== "number" || n.length === 0) return 0;
+  let sum = 0;
+  const digits = n.toString().split("");
+
+  for (let digit of digits) {
+    sum += Number(digit);
+  }
+
+  return sum;
 };
 
 /**
@@ -19,13 +27,29 @@ export const sumDigits = (n) => {
  * @param {Number} end
  * @param {Number} step
  */
-export const createRange = (start, end, step) => {
-	if (start === undefined) throw new Error('start is required');
-	if (end === undefined) throw new Error('end is required');
-	if (step === undefined)
-		console.log(
-			"FYI: Optional step parameter not provided. Remove this check once you've handled the optional step!"
-		);
+export const createRange = (start, end, step = 1) => {
+  if (
+    typeof start !== "number" ||
+    start.length === 0 ||
+    typeof end !== "number" ||
+    end.length === 0 ||
+    typeof step !== "number"
+  )
+    return 0;
+  else if (start === 0 && end === 0 && step === 0) return 0;
+  const range = [];
+
+  if (start <= end) {
+    for (let i = start; i <= end; i += step) {
+      range.push(i);
+    }
+  } else {
+    for (let i = start; i >= end; i -= step) {
+      range.push(i);
+    }
+  }
+
+  return range;
 };
 
 /**
@@ -58,8 +82,38 @@ export const createRange = (start, end, step) => {
  * @param {Array} users
  */
 export const getScreentimeAlertList = (users, date) => {
-	if (users === undefined) throw new Error('users is required');
-	if (date === undefined) throw new Error('date is required');
+  if (
+    !Array.isArray(users) ||
+    users.length === 0 ||
+    typeof date !== "string" ||
+    date.length === 0
+  )
+    return "Invalid input or missing value";
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if (regex.test(date) === false)
+    return "date has to be in this format: YYYY-MM-DD";
+  const alertList = [];
+
+  users.forEach((user) => {
+    const userScreenTime = user.screenTime.find((entry) => entry.date === date);
+    if (
+      !userScreenTime ||
+      !userScreenTime.usage ||
+      Object.values(userScreenTime.usage).some((time) => time < 0)
+    )
+      return [];
+    else {
+      const totalUsage = Object.values(userScreenTime.usage).reduce(
+        (sum, minutes) => sum + minutes,
+        0
+      );
+      if (totalUsage > 100) {
+        alertList.push(user.username);
+      }
+    }
+  });
+
+  return alertList;
 };
 
 /**
@@ -73,7 +127,24 @@ export const getScreentimeAlertList = (users, date) => {
  * @param {String} str
  */
 export const hexToRGB = (hexStr) => {
-	if (hexStr === undefined) throw new Error('hexStr is required');
+  if (hexStr === undefined || hexStr.length === 0 || typeof hexStr !== "string")
+    return "hexadecimal string is required";
+  const hexPattern = /^#?([0-9A-Fa-f]{6})$/;
+
+  if (!hexPattern.test(hexStr)) {
+    return "Invalid hexadecimal color code";
+  }
+  const hex = hexStr.startsWith("#") ? hexStr.slice(1) : hexStr;
+
+  const redHex = hex.substring(0, 2);
+  const greenHex = hex.substring(2, 4);
+  const blueHex = hex.substring(4, 6);
+
+  const red = parseInt(redHex, 16);
+  const green = parseInt(greenHex, 16);
+  const blue = parseInt(blueHex, 16);
+
+  return `rgb(${red},${green},${blue})`;
 };
 
 /**
@@ -87,5 +158,79 @@ export const hexToRGB = (hexStr) => {
  * @param {Array} board
  */
 export const findWinner = (board) => {
-	if (board === undefined) throw new Error('board is required');
+  if (board === undefined || board.length === 0 || !Array.isArray(board))
+    return "invalid or empty board";
+  if (!Array.isArray(board) || board.length !== 3) {
+    return "board has to be an array of length 3";
+  }
+
+  for (const row of board) {
+    if (!Array.isArray(row) || row.length !== 3) {
+      return "each row of the board has to be an array of length 3";
+    }
+
+    for (const cell of row) {
+      if (cell !== "X" && cell !== "0" && cell !== null) {
+        return "each cell of the board has to be either X or 0 or null";
+      }
+    }
+  }
+
+  const winningConditions = [
+    [
+      [0, 0],
+      [0, 1],
+      [0, 2],
+    ], // Top row
+    [
+      [1, 0],
+      [1, 1],
+      [1, 2],
+    ], // Middle row
+    [
+      [2, 0],
+      [2, 1],
+      [2, 2],
+    ], // Bottom row
+    [
+      [0, 0],
+      [1, 0],
+      [2, 0],
+    ], // Left column
+    [
+      [0, 1],
+      [1, 1],
+      [2, 1],
+    ], // Middle column
+    [
+      [0, 2],
+      [1, 2],
+      [2, 2],
+    ], // Right column
+    [
+      [0, 0],
+      [1, 1],
+      [2, 2],
+    ], // Diagonal from top left to bottom right
+    [
+      [0, 2],
+      [1, 1],
+      [2, 0],
+    ], // Diagonal from top right to bottom left
+  ];
+
+  for (const condition of winningConditions) {
+    const [a, b, c] = condition;
+    const [rowA, colA] = a;
+    const [rowB, colB] = b;
+    const [rowC, colC] = c;
+    const valueA = board[rowA][colA];
+    const valueB = board[rowB][colB];
+    const valueC = board[rowC][colC];
+    if (valueA && valueA === valueB && valueA === valueC) {
+      return valueA;
+    }
+  }
+
+  return null;
 };
