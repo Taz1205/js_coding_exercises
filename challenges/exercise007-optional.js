@@ -7,7 +7,6 @@
  * @param {Number} n
  */
 export const sumDigits = (n) => {
-  //if (n === undefined) throw new Error("n is required");
   if (typeof n !== "number" || n.length === 0) return 0;
   let sum = 0;
   const digits = n.toString().split("");
