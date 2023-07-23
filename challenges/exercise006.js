@@ -1,9 +1,3 @@
-/* 
-⚠️
-⚠️ See exercise006.md - this time you have to write your own tests! ⚠️
-⚠️
-*/
-
 /**
  * This function will receive an array of numbers and should return the sum
  * of any numbers which are a multiple of 3 or 5
@@ -12,17 +6,11 @@
  */
 export const sumMultiples = (arr) => {
   if (arr === undefined) throw new Error("arr is required");
-  else if (arr.length === 0 || !Array.isArray(arr))
-    throw new Error("A valid input is required");
-  let sum = 0;
-
-  arr.forEach((n) => {
-    if (n % 3 === 0 || n % 5 === 0) {
-      sum += n;
-    }
-  });
-
-  return sum;
+  return arr.reduce(
+    (total, element) =>
+      element % 3 === 0 || element % 5 === 0 ? total + element : total,
+    0
+  );
 };
 
 /**
@@ -32,9 +20,11 @@ export const sumMultiples = (arr) => {
  */
 export const isValidDNA = (str) => {
   if (str === undefined) throw new Error("str is required");
-  if (str.length === 0 || typeof str !== "string") return false;
-  const regex = /^[CGTA]+$/i;
-  return regex.test(str);
+
+  // 💡 the every method returns true if every element in an array meets the given criteria
+  return [...str].every(
+    (char) => char === "C" || char === "G" || char === "T" || char === "A"
+  );
 };
 
 /**
@@ -44,24 +34,18 @@ export const isValidDNA = (str) => {
  */
 export const getComplementaryDNA = (str) => {
   if (str === undefined) throw new Error("str is required");
-  if (typeof str !== "string") return false;
-  const complementaryPairs = {
-    A: "T",
+  if (!isValidDNA(str)) throw new Error("str must be a valid DNA sequence");
+
+  const bases = str.split("");
+
+  const complimentaryBases = {
     T: "A",
+    A: "T",
     C: "G",
     G: "C",
   };
-  const regex = /^[CGTA]+$/i;
-  let complementaryDNA = "";
-  if (regex.test(str)) {
-    for (let i = 0; i < str.length; i++) {
-      //console.log(str[i]);
-      if (str[i] in complementaryPairs)
-        complementaryDNA += complementaryPairs[str[i]];
-    }
-
-    return complementaryDNA;
-  } else return "";
+  const complimentaryDNA = bases.map((base) => complimentaryBases[base]);
+  return complimentaryDNA.join("");
 };
 
 /**
@@ -70,30 +54,13 @@ export const getComplementaryDNA = (str) => {
  * @returns {Boolean}
  */
 export const isItPrime = (n) => {
-  //if (n === undefined) throw new Error("n is required");
-  if (typeof n !== "number" || n === null) return false;
-  if (n <= 1) {
-    return false;
-  }
+  if (n === undefined) throw new Error("n is required");
 
-  if (n <= 3) {
-    return true;
-  }
+  if (!Number.isInteger(n)) return false;
 
-  if (n % 2 === 0 || n % 3 === 0) {
-    return false;
-  }
-
-  let divisor = 5;
-
-  while (divisor * divisor <= n) {
-    if (n % divisor === 0 || n % (divisor + 2) === 0) {
-      return false;
-    }
-    divisor += 6;
-  }
-
-  return true;
+  for (let i = 2, max = Math.sqrt(n); i <= max; i++)
+    if (n % i === 0) return false;
+  return n > 1;
 };
 
 /**
@@ -108,14 +75,17 @@ export const isItPrime = (n) => {
  * @returns {Array}
  */
 export const createMatrix = (n, fill) => {
-  if (
-    (typeof fill !== "string") | (fill.length === 0) ||
-    typeof n !== "number" ||
-    Number.isNaN(n)
-  )
-    return false;
-  const matrix = Array.from({ length: n }, () => Array(n).fill(fill));
-  return matrix;
+  if (n === undefined) throw new Error("n is required");
+  if (fill === undefined) throw new Error("fill is required");
+
+  let result = [];
+  let i = n;
+  // we can use the .fill() method to create an array of size n and fill it:
+  while (i > 0) {
+    result.push(Array(n).fill(fill));
+    i--;
+  }
+  return result;
 };
 
 /**
@@ -131,16 +101,8 @@ export const createMatrix = (n, fill) => {
  * @returns {Boolean}
  */
 export const areWeCovered = (staff, day) => {
-  if (
-    staff.length === 0 ||
-    day.length === 0 ||
-    !Array.isArray(staff) ||
-    typeof day !== "string"
-  )
-    return false;
-  const staffScheduled = staff.filter((staffMember) =>
-    staffMember.rota.includes(day)
-  );
+  if (staff === undefined) throw new Error("staff is required");
+  if (day === undefined) throw new Error("day is required");
 
-  return staffScheduled.length >= 3;
+  return staff.filter((name) => name.rota.includes(day)).length >= 3;
 };

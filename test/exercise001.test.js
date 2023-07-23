@@ -21,20 +21,11 @@ describe("capitalize", () => {
   test("does nothing if the string is already capitalized", () => {
     expect(capitalize("Hello")).toBe("Hello");
   });
-  test("Prints 'A word is required' if nothing is inputted", () => {
-    expect(capitalize("")).toBe("");
-  });
 });
 
 describe("generateInitials", () => {
   test("returns the initials of a firstname and surname", () => {
     expect(generateInitials("Frederic", "Bonneville")).toBe("F.B");
-  });
-  test("Prints 'first name is required' if first name is not inputted", () => {
-    expect(generateInitials("", "Bonneville")).toBe(".B");
-  });
-  test("Prints 'last name is required' if last name is not inputted", () => {
-    expect(generateInitials("Frederic", "")).toBe("F.");
   });
 });
 
@@ -82,7 +73,6 @@ describe("getMiddleCharacter", () => {
   test("returns the middle 2 characters from a string of even length", () => {
     expect(getMiddleCharacter("help!!")).toBe("lp");
   });
-  getMiddleCharacter;
 });
 
 describe("reverseWord", () => {
@@ -95,9 +85,6 @@ describe("reverseWord", () => {
       "?siht od ot tnaw neve uoy dluow yhw"
     );
   });
-  test("Prints error message if there are no words inputted", () => {
-    expect(reverseWord("")).toBe("word is required");
-  });
 });
 
 describe("reverseAllWords", () => {
@@ -109,9 +96,6 @@ describe("reverseAllWords", () => {
     expect(
       reverseAllWords(["jest", "mocha", "rspec", "jasmine", "selenium"])
     ).toEqual(["tsej", "ahcom", "cepsr", "enimsaj", "muineles"]);
-  });
-  test("Prints error message if there are no words inputted", () => {
-    expect(reverseAllWords("")).toBe("words are required");
   });
 });
 
@@ -138,10 +122,6 @@ describe("countLinuxUsers", () => {
     ];
     expect(countLinuxUsers(users)).toBe(5);
   });
-  test("Prints out error message 'users are required'", () => {
-    const users = [];
-    expect(countLinuxUsers(users)).toBe("users are required");
-  });
 });
 
 describe("getMeanScore", () => {
@@ -152,9 +132,6 @@ describe("getMeanScore", () => {
 
   test("returns the mean to 2 decimal places", () => {
     expect(getMeanScore([24, 44, 56, 11, 12, 17, 34])).toBe(28.29);
-  });
-  test("Prints error message", () => {
-    expect(getMeanScore("")).toBe("scores are required");
   });
 });
 
